@@ -11,7 +11,7 @@ logging.info("Initializing model...")
 try:
     # Load the model
     model_id = "THUDM/agentlm-7b"  # Replace with the appropriate model ID
-    generator = pipeline("text-generation", model=model_id, device="cuda")
+    generator = pipeline("text-generation", model=model_id, device=device)
     logging.info("Model loaded successfully.")
 except Exception as e:
     logging.error("Error loading model: %s", e)
