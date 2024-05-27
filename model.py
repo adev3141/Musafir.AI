@@ -1,10 +1,14 @@
 # model.py
 
 from transformers import pipeline
+import torch
+
+# Explicitly set the device to CPU
+device = "cpu"
 
 # Load the model
-model_id = "meta-llama/Meta-Llama-3-8B-Instruct"  
-generator = pipeline("text-generation", model=model_id, device="cuda")
+model_id = "THUDM/agentlm-7b"  # Replace with the appropriate model ID
+generator = pipeline("text-generation", model=model_id, device=device)
 
 def generate_itinerary(prompt):
     response = generator(prompt, max_length=500)
