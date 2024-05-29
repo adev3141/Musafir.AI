@@ -5,7 +5,6 @@ class CohereModel:
     def __init__(self, api_key):
         self.api_key = api_key
         self.client = cohere.Client(self.api_key)
-        self.model = 'command-r'
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         logging.info("CohereModel initialized.")
 
@@ -26,17 +25,11 @@ class CohereModel:
     def generate_itinerary(self, prompt):
         logging.debug(f"Generating itinerary with prompt: {prompt}")
         try:
-            response = self.client.generate(
-                model=self.model,
-                prompt=prompt,
-                max_tokens=500,
-                temperature=0.9,
-                k=0,
-                p=0.75,
-                stop_sequences=[],
+            response = self.client.chat(
+                query=prompt,
                 return_likelihoods='NONE'
             )
-            generated_text = response.generations[0].text
+            generated_text = response.reply
             logging.info("Itinerary generated successfully.")
             logging.debug(f"Model response: {generated_text}")
 
