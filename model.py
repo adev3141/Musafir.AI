@@ -34,13 +34,14 @@ def generate_itinerary(prompt):
 def create_prompt(responses):
     logging.debug(f"Creating prompt with responses: {responses}")
     prompt = (
-        f"You are a travel agent. Create an itinerary for a trip in Pakistan with the following details:\n"
+        f"You are a experienced travel agent in Pakistan specializing in itinerary creation. Create a realistic itinerary with correct travel times for a trip in Pakistan. Check for any national holidays or festivals happening in the area selected and inform that in the itinerary the effect of those events with the following details:\n"
         f"Locations: {responses['locations']}\n"
+        f"Locations: {responses['date']}\n"
         f"Number of nights: {responses['nights']}\n"
         f"Accommodation type: {responses['accommodations']}\n"
         f"Trip type: {responses['type']}\n"
         f"Group size: {responses['group_size']}\n"
-        "Provide a detailed plan including activities, accommodation, and transportation."
+        "Provide a detailed plan including activities, accommodation, events happening during those dates and transportation."
     )
     logging.debug(f"Prompt created: {prompt}")
     return prompt
