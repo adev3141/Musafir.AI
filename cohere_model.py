@@ -14,13 +14,19 @@ class CohereModel:
     def create_prompt(self, responses):
         logging.debug(f"Creating prompt with responses: {responses}")
         prompt = (
-            f"You are a travel agent. Create an itinerary for a trip in Pakistan with the following details:\n"
-            f"Locations: {responses['locations']}\n"
-            f"Number of nights: {responses['nights']}\n"
-            f"Accommodation type: {responses['accommodations']}\n"
-            f"Trip type: {responses['type']}\n"
-            f"Group size: {responses['group_size']}\n"
-            "Provide a detailed plan including activities, accommodation, and transportation."
+            f"You are an experienced travel agent specializing in creating detailed itineraries for trips in Pakistan. Your task is to create a realistic and well-organized itinerary, considering travel times, local events, and national holidays. Use the following details to craft the itinerary:\n"
+            f"- Locations: {responses['locations']}\n"
+            f"- Starting Date: {responses['start_date']}\n"
+            f"- Number of Nights: {responses['nights']}\n"
+            f"- Accommodation Type: {responses['accommodations']}\n"
+            f"- Trip Type (Adventure or Laid-back): {responses['type']}\n"
+            f"- Group Size: {responses['group_size']}\n\n"
+            "Provide a comprehensive plan that includes:\n"
+            "- Daily activities and sightseeing spots\n"
+            "- Accommodation details for each night\n"
+            "- Events or festivals happening during the trip dates and their impact on travel plans\n"
+            "- Transportation details between locations, including travel times\n"
+            "- Recommendations for local cuisine and dining options"
         )
         logging.debug(f"Prompt created: {prompt}")
         return prompt
@@ -39,12 +45,7 @@ class CohereModel:
             # Check if the generated text is the same as the prompt and use a fallback if necessary
             if generated_text.strip() == prompt.strip():
                 generated_text = (
-                    "Day 1: Arrival in Hunza, check into high-end accommodation, explore the local market.\n"
-                    "Day 2: Visit Baltit Fort and Altit Fort, enjoy adventure activities in Karimabad.\n"
-                    "Day 3: Trek to Rakaposhi Base Camp, return to hotel for dinner.\n"
-                    "Day 4: Day trip to Attabad Lake for boating and adventure sports.\n"
-                    "Day 5: Explore Khunjerab Pass, return to Hunza for overnight stay.\n"
-                    "Day 6: Departure from Hunza."
+                    "Oooops! Looks like we've reached our daily limit of giving out free itineraries."
                 )
             return generated_text
         except Exception as e:
