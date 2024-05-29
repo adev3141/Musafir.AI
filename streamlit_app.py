@@ -1,5 +1,7 @@
 import streamlit as st
 from cohere_model import CohereModel
+from fpdf import FPDF
+import datetime
 
 # Custom CSS for the design system
 st.markdown(
@@ -43,6 +45,15 @@ st.markdown(
         cursor: pointer;
         border-radius: 8px;
     }
+    .itinerary {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        color: #2B2D42;
+    }
+    .itinerary h3 {
+        color: #FA3E01;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -52,7 +63,7 @@ st.markdown(
 st.image("hunza.ai.png", use_column_width=False, width=100)
 
 #st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Plan your next adventure on the fly with our power AI</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Plan your next adventure effortlessly</div>', unsafe_allow_html=True)
 
 with st.expander("Instructions"):
     st.write("""
@@ -81,6 +92,8 @@ if 'responses' not in st.session_state:
     st.session_state['responses'] = {}
 if 'page' not in st.session_state:
     st.session_state['page'] = 0
+if 'itinerary' not in st.session_state:
+    st.session_state['itinerary'] = ""
 
 cohere_model = CohereModel()
 
@@ -93,6 +106,13 @@ questions = [
     ("How many people are in your group?", 'group_size', 'text')
 ]
 
+def generate_pdf(itinerary_text):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    pdf.multi_cell(0, 10, itinerary_text)
+    return pdf.output(dest='S').encode('latin1')
+
 with st.container():
     if st.session_state.page < len(questions):
         question, key, input_type = questions[st.session_state.page]
@@ -101,8 +121,20 @@ with st.container():
         st.write("Thank you for providing the details. Generating your itinerary...")
         responses = {key: st.session_state[key] for _, key, _ in questions}
         prompt = cohere_model.create_prompt(responses)
-        itinerary = cohere_model.generate_itinerary(prompt)
-        st.write(itinerary)
+        st.session_state['itinerary'] = cohere_model.generate_itinerary(prompt)
+        
+        # Display the itinerary in a styled format
+        st.markdown('<div class="itinerary"><h3>Your Itinerary</h3>' + st.session_state['itinerary'].replace('\n', '<br>') + '</div>', unsafe_allow_html=True)
+        
+        # Generate and provide a download link for the PDF only if the itinerary is generated
+        if st.session_state['itinerary']:
+            pdf_content = generate_pdf(st.session_state['itinerary'])
+            st.download_button(
+                label="Download Itinerary as PDF",
+                data=pdf_content,
+                file_name=f"itinerary_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
+                mime="application/octet-stream"
+            )
 
     if st.session_state.page > 0:
         if st.button('Previous'):
