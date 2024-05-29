@@ -32,7 +32,7 @@ class CohereModel:
         return prompt
 
     def generate_itinerary(self, prompt):
-        logging.debug(f"Generating itinerary with prompt: {prompt}")
+        logging.debug(f"Our AI is going its magic: {prompt}")
         try:
             response = self.client.chat(
                 message=prompt,
