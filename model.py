@@ -1,6 +1,5 @@
 import logging
 from transformers import pipeline
-import torch
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -24,8 +23,9 @@ except Exception as e:
 def generate_itinerary(prompt):
     logging.debug(f"Generating itinerary with prompt: {prompt}")
     try:
-        response = generator(prompt, max_length=500)
+        response = generator(prompt, max_length=500, truncation=True)
         logging.info("Itinerary generated successfully.")
+        logging.debug(f"Model response: {response}")
         return response[0]['generated_text']
     except Exception as e:
         logging.error(f"Error generating itinerary: {e}")
