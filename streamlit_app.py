@@ -10,7 +10,7 @@ if 'responses' not in st.session_state:
     st.session_state['responses'] = {}
     st.session_state['page'] = 0
 
-api_key = 'your-api-key'  # Replace with your actual API key
+api_key = 'tkhCHTdt5MtuFdc7uB7o1XrhHJFFrY6nt63DpsC6'  # Replace with your actual API key
 cohere_model = CohereModel(api_key)
 
 questions = [
