@@ -26,8 +26,8 @@ class CohereModel:
         logging.debug(f"Generating itinerary with prompt: {prompt}")
         try:
             response = self.client.chat(
-                query=prompt,
-                return_likelihoods='NONE'
+                message=prompt,
+                model='command-r'
             )
             generated_text = response.reply
             logging.info("Itinerary generated successfully.")
@@ -47,4 +47,3 @@ class CohereModel:
         except Exception as e:
             logging.error(f"Error generating itinerary: {e}")
             raise
-
