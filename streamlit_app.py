@@ -19,7 +19,11 @@ st.markdown(
     }
     .subtitle {
         font-size: 1.5em;
-        color: #1B435A;
+        background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-align: center;
+        margin-bottom: 20px;
     }
     .container {
         padding: 20px;
@@ -48,7 +52,7 @@ st.markdown(
 st.image("hunza.ai.png", use_column_width=False, width=100)
 
 # st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">Plan your next adventure effortlessly</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Plan your next adventure in seconds with AI</div>', unsafe_allow_html=True)
 
 with st.expander("Instructions"):
     st.write("""
