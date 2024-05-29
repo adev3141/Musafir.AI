@@ -2,7 +2,7 @@ import logging
 from cohere_model import CohereModel
 
 def main():
-    api_key = 'your-api-key'  # Replace with your actual API key
+    api_key = 'tkhCHTdt5MtuFdc7uB7o1XrhHJFFrY6nt63DpsC6'  # Replace with your actual API key
     cohere_model = CohereModel(api_key)
     responses = {}
 
