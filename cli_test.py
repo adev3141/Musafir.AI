@@ -1,13 +1,11 @@
 import logging
-from model import create_prompt, generate_itinerary
-
-# Configure logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+from cohere_model import CohereModel
 
 def main():
+    api_key = 'your-api-key'  # Replace with your actual API key
+    cohere_model = CohereModel(api_key)
     responses = {}
 
-    # Collect user input via CLI
     responses['locations'] = input("Where do you want to travel in Pakistan (can be multiple locations)? ")
     responses['nights'] = input("How many nights will you be traveling for? ")
     responses['accommodations'] = input("Do you want high-end or economy accommodations? ")
@@ -16,13 +14,11 @@ def main():
 
     logging.debug(f"Responses collected: {responses}")
 
-    # Create the prompt
-    prompt = create_prompt(responses)
+    prompt = cohere_model.create_prompt(responses)
     logging.debug(f"Generated prompt: {prompt}")
 
-    # Generate the itinerary
     try:
-        itinerary = generate_itinerary(prompt)
+        itinerary = cohere_model.generate_itinerary(prompt)
         print("Generated Itinerary:")
         print(itinerary)
         logging.info("Itinerary displayed successfully.")
