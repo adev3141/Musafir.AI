@@ -34,14 +34,19 @@ def generate_itinerary(prompt):
 def create_prompt(responses):
     logging.debug(f"Creating prompt with responses: {responses}")
     prompt = (
-        f"You are a experienced travel agent in Pakistan specializing in itinerary creation. Create a realistic itinerary with correct travel times for a trip in Pakistan. Check for any national holidays or festivals happening in the area selected and inform that in the itinerary the effect of those events with the following details:\n"
-        f"Locations: {responses['locations']}\n"
-        f"Locations: {responses['date']}\n"
-        f"Number of nights: {responses['nights']}\n"
-        f"Accommodation type: {responses['accommodations']}\n"
-        f"Trip type: {responses['type']}\n"
-        f"Group size: {responses['group_size']}\n"
-        "Provide a detailed plan including activities, accommodation, events happening during those dates and transportation."
+        f"You are an experienced travel agent specializing in creating detailed itineraries for trips in Pakistan. Your task is to create a realistic and well-organized itinerary, considering travel times, local events, and national holidays. Use the following details to craft the itinerary:\n"
+        f"- Locations: {responses['locations']}\n"
+        f"- Starting Date: {responses['start_date']}\n"
+        f"- Number of Nights: {responses['nights']}\n"
+        f"- Accommodation Type: {responses['accommodations']}\n"
+        f"- Trip Type (Adventure or Laid-back): {responses['type']}\n"
+        f"- Group Size: {responses['group_size']}\n\n"
+        "Provide a comprehensive plan that includes:\n"
+        "- Daily activities and sightseeing spots\n"
+        "- Accommodation details for each night\n"
+        "- Events or festivals happening during the trip dates and their impact on travel plans\n"
+        "- Transportation details between locations, including travel times\n"
+        "- Recommendations for local cuisine and dining options"
     )
     logging.debug(f"Prompt created: {prompt}")
     return prompt
