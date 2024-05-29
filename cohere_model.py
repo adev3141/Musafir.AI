@@ -27,9 +27,9 @@ class CohereModel:
         try:
             response = self.client.chat(
                 message=prompt,
-                model='command-r'
+                model='command-r-plus'
             )
-            generated_text = response.reply
+            generated_text = response.text
             logging.info("Itinerary generated successfully.")
             logging.debug(f"Model response: {generated_text}")
 
