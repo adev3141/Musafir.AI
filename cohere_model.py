@@ -1,9 +1,12 @@
 import cohere
 import logging
+import os
 
 class CohereModel:
-    def __init__(self, api_key):
-        self.api_key = api_key
+    def __init__(self):
+        self.api_key = os.getenv('COHERE_API_KEY')
+        if not self.api_key:
+            raise ValueError("API key not found. Please set the COHERE_API_KEY environment variable.")
         self.client = cohere.Client(self.api_key)
         logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
         logging.info("CohereModel initialized.")
