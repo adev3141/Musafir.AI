@@ -1,9 +1,9 @@
 import streamlit as st
-from cohere_model import CohereModel
+from cohere_model import CohereModel  # Assuming you have this module
 from fpdf import FPDF
 import datetime
 
-# Custom CSS for the design system
+# Custom CSS for the design system and to increase the size of the displayed questions
 st.markdown(
     """
     <style>
@@ -73,6 +73,14 @@ st.markdown(
     .itinerary p {
         font-style: italic;
     }
+    .question {
+        font-size: 2em;  /* Increased font size */
+        color: #FA3E01;
+    }
+    .question-input {
+        font-size: 1.2em;
+        padding: 10px;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -81,9 +89,11 @@ st.markdown(
 # Display the logo with a specific width
 st.image("hunza.ai.png", use_column_width=False, width=75)
 
-#st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
+# Title and Subtitle
+st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Let our powerful AI plan your adventure in seconds</div>', unsafe_allow_html=True)
 
+# Instructions
 with st.expander("Instructions"):
     st.write("""
     1. Enter the travel destination.
@@ -95,15 +105,15 @@ with st.expander("Instructions"):
     """)
 
 def ask_question(question, key, input_type="text"):
-    if key not in st.session_state:
-        st.session_state[key] = ""
-
+    st.markdown(f'<div class="question">{question}</div>', unsafe_allow_html=True)
+    
     if input_type == "date":
-        st.session_state[key] = st.date_input(question)
+        response = st.date_input("", key=key)
     else:
-        st.session_state[key] = st.text_input(question, value=st.session_state[key])
-
+        response = st.text_input("", key=key)
+    
     if st.button('Next'):
+        st.session_state.responses[key] = response
         st.session_state.page += 1
         st.experimental_rerun()
 
@@ -132,22 +142,38 @@ def generate_pdf(itinerary_text):
     pdf.multi_cell(0, 10, itinerary_text)
     return pdf.output(dest='S').encode('latin1')
 
+def format_itinerary(itinerary):
+    # Splitting the generated itinerary by lines and reformatting it as HTML
+    days = itinerary.split('##')
+    formatted_itinerary = ""
+    for day in days:
+        if day.strip():
+            formatted_itinerary += f"<div class='itinerary'>{day.strip()}</div>"
+    return formatted_itinerary
+
 with st.container():
     if st.session_state.page < len(questions):
         question, key, input_type = questions[st.session_state.page]
-        ask_question(question, key, input_type)
+        if key not in st.session_state.responses:
+            ask_question(question, key, input_type)
+        else:
+            st.session_state.page += 1
+            st.experimental_rerun()
     else:
         st.write("Thank you for providing the details. Generating your itinerary...")
-        responses = {key: st.session_state[key] for _, key, _ in questions}
+        responses = st.session_state.responses
         prompt = cohere_model.create_prompt(responses)
-        st.session_state['itinerary'] = cohere_model.generate_itinerary(prompt)
+        st.session_state.itinerary = cohere_model.generate_itinerary(prompt)
+
+        # Format the itinerary
+        formatted_itinerary = format_itinerary(st.session_state.itinerary)
         
-        # Display the itinerary in a styled format
-        st.markdown('<div class="itinerary"><h3>Your Itinerary</h3>' + st.session_state['itinerary'].replace('\n', '<br>') + '</div>', unsafe_allow_html=True)
-        
+        # Display the itinerary
+        st.markdown(f'<div class="itinerary"><h4>Itinerary for {responses["locations"]}, {int(responses["nights"])+1} days</h4>{formatted_itinerary}</div>', unsafe_allow_html=True)
+
         # Generate and provide a download link for the PDF only if the itinerary is generated
-        if st.session_state['itinerary']:
-            pdf_content = generate_pdf(st.session_state['itinerary'])
+        if st.session_state.itinerary:
+            pdf_content = generate_pdf(st.session_state.itinerary)
             st.download_button(
                 label="Download Itinerary as PDF",
                 data=pdf_content,
