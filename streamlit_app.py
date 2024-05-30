@@ -1,3 +1,4 @@
+import subprocess
 import streamlit as st
 from cohere_model import CohereModel  # Assuming you have this module
 from fpdf import FPDF
