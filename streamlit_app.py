@@ -74,11 +74,11 @@ st.markdown(
         font-style: italic;
     }
     .question {
-        font-size: 2em;  /* Increased font size */
+        font-size: 1.3em;  /* Increased font size */
         color: #FA3E01;
     }
     .question-input {
-        font-size: 1.2em;
+        font-size: 0.9em;
         padding: 10px;
     }
     </style>
@@ -90,7 +90,7 @@ st.markdown(
 st.image("hunza.ai.png", use_column_width=False, width=75)
 
 # Title and Subtitle
-st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
+#st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Let our powerful AI plan your adventure in seconds</div>', unsafe_allow_html=True)
 
 # Instructions
