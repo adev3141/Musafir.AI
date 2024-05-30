@@ -1,6 +1,7 @@
-import cohere
 import logging
 import os
+import cohere
+
 
 class CohereModel:
     def __init__(self):
