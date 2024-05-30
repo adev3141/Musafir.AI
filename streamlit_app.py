@@ -60,7 +60,7 @@ st.markdown(
 )
 
 # Display the logo with a specific width
-st.image("hunza.ai.png", use_column_width=False, width=100)
+st.image("hunza.ai.png", use_column_width=False, width=75)
 
 #st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Plan your next adventure effortlessly</div>', unsafe_allow_html=True)
