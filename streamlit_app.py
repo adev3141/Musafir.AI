@@ -24,7 +24,7 @@ st.markdown(
         background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%);
         -webkit-background-clip: text;
         color: transparent;
-        text-align: center;
+        text-align: left;
         margin-bottom: 20px;
     }
     .container {
@@ -45,6 +45,19 @@ st.markdown(
         cursor: pointer;
         border-radius: 8px;
     }
+    .stDownloadButton>button {
+        background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
     .itinerary {
         background-color: white;
         padding: 20px;
@@ -53,6 +66,12 @@ st.markdown(
     }
     .itinerary h3 {
         color: #FA3E01;
+    }
+    .itinerary h4 {
+        color: #1B435A;
+    }
+    .itinerary p {
+        font-style: italic;
     }
     </style>
     """,
