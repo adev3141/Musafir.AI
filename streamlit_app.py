@@ -1,5 +1,5 @@
 import streamlit as st
-from cohere_model import CohereModel  # Assuming you have this module
+from cohere_model import CohereModel  
 from fpdf import FPDF
 import datetime
 
