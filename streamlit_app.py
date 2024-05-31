@@ -81,6 +81,18 @@ st.markdown(
         font-size: 0.9em;
         padding: 10px;
     }
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #0F1116;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
     </style>
     """,
     unsafe_allow_html=True
@@ -185,3 +197,7 @@ with st.container():
         if st.button('Previous'):
             st.session_state.page -= 1
             st.experimental_rerun()
+
+# Footer
+st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
+
