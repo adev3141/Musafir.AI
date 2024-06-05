@@ -190,7 +190,7 @@ with st.container():
                 label="Download Itinerary as PDF",
                 data=pdf_content,
                 file_name=f"itinerary_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
-                mime="application/octet-stream"
+                mime="application/pdf"
             )
 
     if st.session_state.page > 0:
