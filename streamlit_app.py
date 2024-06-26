@@ -148,10 +148,14 @@ questions = [
 ]
 
 def generate_pdf(itinerary_text):
+    subtitle = "\n\nNote: This itinerary is AI-generated and may be subject to change."
+    complete_text = itinerary_text + subtitle
+    
     pdf = FPDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, itinerary_text)
+    pdf.multi_cell(0, 10, complete_text)
+    
     return pdf.output(dest='S').encode('latin1')
 
 def format_itinerary(itinerary):
@@ -161,7 +165,9 @@ def format_itinerary(itinerary):
     for day in days:
         if day.strip():
             formatted_itinerary += f"<div class='itinerary'>{day.strip()}</div>"
+    formatted_itinerary += "<div class='itinerary'><p><em>Note: This itinerary is AI-generated and may be subject to change.</em></p></div>"
     return formatted_itinerary
+
 
 with st.container():
     if st.session_state.page < len(questions):
@@ -172,7 +178,7 @@ with st.container():
             st.session_state.page += 1
             st.experimental_rerun()
     else:
-        st.write("Thank you for providing the details. Generating your itinerary...")
+        st.write("Thank you for providing the details. I am now finding out the best, most realistic itinerary for you...")
         responses = st.session_state.responses
         prompt = cohere_model.create_prompt(responses)
         st.session_state.itinerary = cohere_model.generate_itinerary(prompt)
