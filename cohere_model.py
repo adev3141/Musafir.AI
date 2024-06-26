@@ -15,7 +15,7 @@ class CohereModel:
     def create_prompt(self, responses):
         logging.debug(f"Creating prompt with responses: {responses}")
         prompt = (
-            f"You are an experienced travel agent specializing in creating detailed itineraries for trips in Pakistan. Your task is to create a realistic and well-organized itinerary, considering travel times, local events, and national holidays. Use the following details to craft the itinerary:\n"
+            f"You are an experienced travel agent specializing in creating detailed itineraries for trips in Pakistan. Your task is to create a realistic and well-organized itinerary, considering travel times, and most used routes to reach those destinations, , local events, and national holidays. Use the following details to craft the itinerary:\n"
             f"- Locations: {responses['locations']}\n"
             f"- Starting Date: {responses['start_date']}\n"
             f"- Number of Nights: {responses['nights']}\n"
