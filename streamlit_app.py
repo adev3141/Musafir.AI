@@ -99,7 +99,7 @@ st.markdown(
 )
 
 # Display the logo with a specific width
-st.image("/Users/devprofile/Documents/GitHub/hunza.ai-/logo/hunza.ai.png", use_column_width=False, width=75)
+st.image("logo/hunza.ai.png", use_column_width=False, width=75)
 
 # Title and Subtitle
 #st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
@@ -199,7 +199,7 @@ with st.container():
 
         # Generate and provide a download link for the PDF only if the itinerary is generated
         if st.session_state.itinerary:
-            logo_path = "/Users/devprofile/Documents/GitHub/hunza.ai-/logo/logo.png"  
+            logo_path = "logo/logo.png"  
             pdf_content = generate_pdf(st.session_state.itinerary, logo_path)
             st.download_button(
                 label="Download Itinerary as PDF",
