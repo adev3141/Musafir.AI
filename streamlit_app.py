@@ -99,7 +99,7 @@ st.markdown(
 )
 
 # Display the logo with a specific width
-st.image("hunza.ai.png", use_column_width=False, width=75)
+st.image("/Users/devprofile/Documents/GitHub/hunza.ai-/logo/hunza.ai.png", use_column_width=False, width=75)
 
 # Title and Subtitle
 #st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
@@ -147,11 +147,19 @@ questions = [
     ("How many people are in your group?", 'group_size', 'text')
 ]
 
-def generate_pdf(itinerary_text):
+def generate_pdf(itinerary_text, logo_path):
     subtitle = "\n\nNote: This itinerary is AI-generated and may be subject to change."
     complete_text = itinerary_text + subtitle
     
-    pdf = FPDF()
+    class PDF(FPDF):
+        def header(self):
+            # Add a logo (assuming logo_path is the path to your logo file)
+            self.image(logo_path, 10, 8, 33)  # Adjust the position and size as needed
+            self.set_font("Arial", 'B', 12)
+            self.cell(0, 10, 'Itinerary', ln=True, align='C')
+            self.ln(20)
+    
+    pdf = PDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
     pdf.multi_cell(0, 10, complete_text)
@@ -178,7 +186,7 @@ with st.container():
             st.session_state.page += 1
             st.experimental_rerun()
     else:
-        st.write("Thank you for providing the details. I am now finding out the best, most realistic itinerary for you...")
+        st.write("Thank you for providing the details. I am now creating out the best, most realistic itinerary for you...")
         responses = st.session_state.responses
         prompt = cohere_model.create_prompt(responses)
         st.session_state.itinerary = cohere_model.generate_itinerary(prompt)
@@ -191,7 +199,8 @@ with st.container():
 
         # Generate and provide a download link for the PDF only if the itinerary is generated
         if st.session_state.itinerary:
-            pdf_content = generate_pdf(st.session_state.itinerary)
+            logo_path = "/Users/devprofile/Documents/GitHub/hunza.ai-/logo/logo.png"  
+            pdf_content = generate_pdf(st.session_state.itinerary, logo_path)
             st.download_button(
                 label="Download Itinerary as PDF",
                 data=pdf_content,
