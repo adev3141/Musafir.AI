@@ -109,11 +109,12 @@ st.markdown('<div class="subtitle">Let our powerful AI plan your adventure in se
 with st.expander("Instructions"):
     st.write("""
     1. Enter the travel destination.
-    2. Provide the starting date.
-    3. Provide the number of nights.
-    4. Choose accommodation type.
-    5. Specify the trip type.
-    6. Enter the group size.
+    2. Provide the starting location.
+    3. Provide the starting date.
+    4. Provide the number of nights.
+    5. Choose accommodation type.
+    6. Specify the trip type.
+    7. Enter the group size.
     """)
 
 def ask_question(question, key, input_type="text"):
@@ -140,6 +141,7 @@ cohere_model = CohereModel()
 
 questions = [
     ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text'),
+    ("What's your starting location?", 'starting_location', 'text'),
     ("When will your trip start?", 'start_date', 'date'),
     ("How many nights will you be traveling for?", 'nights', 'text'),
     ("Do you want high-end or economy accommodations?", 'accommodations', 'text'),
@@ -215,4 +217,3 @@ with st.container():
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
-
