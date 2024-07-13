@@ -1,0 +1,77 @@
+Roadmap for the Travel Itinerary Generator App
+Current Features
+
+User Interface:
+
+Step-by-step form to gather trip details:
+Travel locations
+Starting location
+Starting date
+Number of nights
+Accommodation type
+Trip type (Adventure or Laid-back)
+Group size
+Custom CSS for styling:
+Background color
+Text color
+Font size
+Button styling
+Footer design
+Backend:
+
+CohereModel class for interacting with Cohere API:
+Initializing Cohere client
+Creating prompts for itinerary generation
+Generating itineraries using Cohere AI
+PDF Generation:
+
+Functionality to generate a PDF of the itinerary:
+Custom header with a logo
+Itinerary content with a disclaimer note
+Download button for the PDF
+Session Management:
+
+Handling user responses and session state:
+Storing responses for each question
+Navigating between questions
+Generating and displaying the final itinerary
+Future Developments
+
+App Bar with Clickable Links:
+
+Add a navigation bar at the bottom of the app.
+Include clickable links to social media platforms:
+Instagram
+Linktree
+Pinterest
+Ensure consistent styling with the existing design.
+Full Deployment:
+
+Deploy the app on a custom domain:
+Domain name: AI-itinerary.adev3141.com
+Ensure the app is accessible and fully functional on the domain.
+
+Implementation Steps for Future Developments
+
+1. App Bar with Clickable Links:
+
+Design and Integration:
+Add HTML/CSS for the app bar in the streamlit_app.py.
+Use Streamlit's markdown or HTML support to create clickable links.
+Ensure the app bar matches the current app design and colors.
+
+2. Full Deployment on Domain:
+
+Setup Domain and Hosting:
+Register the domain AI-itinerary.adev3141.com.
+Choose a hosting provider that supports Streamlit apps.
+Deploy the app using the provider's deployment process.
+Example Hosting Providers:
+Streamlit Cloud
+Heroku
+AWS
+Deployment Steps:
+Configure domain settings to point to the hosting provider.
+Ensure SSL certificates are set up for secure access.
+Test the app on the domain to verify functionality.
+
