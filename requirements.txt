@@ -1,3 +1,4 @@
 streamlit
 cohere
 fpdf
+google-generativeai
