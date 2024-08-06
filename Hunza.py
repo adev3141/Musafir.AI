@@ -1,5 +1,6 @@
 import streamlit as st
 from cohere_model import CohereModel  
+from gemini_model import GeminiModel
 from fpdf import FPDF
 import datetime
 
@@ -137,7 +138,7 @@ if 'page' not in st.session_state:
 if 'itinerary' not in st.session_state:
     st.session_state['itinerary'] = ""
 
-cohere_model = CohereModel()
+gemini_model = GeminiModel()
 
 questions = [
     ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text'),
@@ -190,8 +191,8 @@ with st.container():
     else:
         st.write("Thank you for providing the details. I am now creating out the best, most realistic itinerary for you...")
         responses = st.session_state.responses
-        prompt = cohere_model.create_prompt(responses)
-        st.session_state.itinerary = cohere_model.generate_itinerary(prompt)
+        prompt = gemini_model.create_prompt(responses)
+        st.session_state.itinerary = gemini_model.generate_itinerary(prompt)
 
         # Format the itinerary
         formatted_itinerary = format_itinerary(st.session_state.itinerary)
