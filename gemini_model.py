@@ -54,7 +54,7 @@ class GeminiModel:
         try:
             response = self.model.generate_content(prompt)
             generated_text = response.text
-            logging.info("Itinerary generated successfully.")
+            logging.info("Itinerary generattttttted successfully.")
             logging.debug(f"Model response: {generated_text}")
 
             # Check if the generated text is the same as the prompt and use a fallback if necessary
