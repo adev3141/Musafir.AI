@@ -57,7 +57,7 @@ class GeminiModel:
             logging.info("Itinerary generated successfully.")
             logging.debug(f"Model response: {generated_text}")
 
-            # Check if the generated text is the sadsdsdsdme as the prompt and use a fallback if necessary
+            # Check if the generated text is the same as the prompt and use a fallback if necessary
             if generated_text.strip() == prompt.strip():
                 generated_text = (
                     "Oooops! Looks like we've reached our daily limit of giving out free itineraries."
