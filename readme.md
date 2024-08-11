@@ -1,4 +1,6 @@
-Travel Itinerary Generator
+AI Travel Itinerary Generator
+
+[Hunza.AI](https://itinerary.streamlit.app)
 
 This project is a travel itinerary generator specifically designed for creating detailed travel plans for trips in Pakistan. The generator uses Cohere's AI model to craft itineraries based on user input, considering travel times, routes, local events, national holidays, and other essential factors.
 
