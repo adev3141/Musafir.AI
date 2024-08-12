@@ -129,6 +129,7 @@ def ask_question(question, key, input_type="text"):
     if st.button('Next'):
         st.session_state.responses[key] = response
         st.session_state.page += 1
+        st.experimental_rerun()
 
 
 if 'responses' not in st.session_state:
@@ -189,6 +190,7 @@ with st.container():
             ask_question(question, key, input_type)
         else:
             st.session_state.page += 1
+            st.experimental_rerun()
     else:
         st.write("Thank you for providing the details. I am now creating out the best, most realistic itinerary for you...")
         responses = st.session_state.responses
