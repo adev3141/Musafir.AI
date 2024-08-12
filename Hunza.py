@@ -215,6 +215,7 @@ with st.container():
     if st.session_state.page > 0:
         if st.button('Previous'):
             st.session_state.page -= 1
+            st.experimental_rerun()
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
