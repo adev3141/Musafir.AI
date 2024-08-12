@@ -104,7 +104,7 @@ st.image("logo/hunza.ai.png", use_column_width=False, width=75)
 
 # Title and Subtitle
 #st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">gellooww Let our powerful AI plan your adventure in seconds</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Let our powerful AI plan your adventure in seconds</div>', unsafe_allow_html=True)
 
 # Instructions
 with st.expander("Instructions"):
