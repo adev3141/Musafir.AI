@@ -129,7 +129,6 @@ def ask_question(question, key, input_type="text"):
     if st.button('Next'):
         st.session_state.responses[key] = response
         st.session_state.page += 1
-        st.experimental_rerun()
 
 
 if 'responses' not in st.session_state:
@@ -152,12 +151,14 @@ questions = [
 ]
 
 def generate_pdf(itinerary_text, logo_path):
+    # Replace unsupported characters with alternatives
+    itinerary_text = itinerary_text.replace('\u2013', '-').replace('\u2014', '--')
+
     subtitle = "\n\nNote: This itinerary is AI-generated and may be subject to change."
     complete_text = itinerary_text + subtitle
     
     class PDF(FPDF):
         def header(self):
-            # Add a logo (assuming logo_path is the path to your logo file)
             self.image(logo_path, 10, 8, 33)  # Adjust the position and size as needed
             self.set_font("Arial", 'B', 12)
             self.cell(0, 10, 'Itinerary', ln=True, align='C')
@@ -166,9 +167,9 @@ def generate_pdf(itinerary_text, logo_path):
     pdf = PDF()
     pdf.add_page()
     pdf.set_font("Arial", size=12)
-    pdf.multi_cell(0, 10, complete_text)
+    pdf.multi_cell(0, 10, complete_text.encode('latin-1', 'replace').decode('latin-1'))
     
-    return pdf.output(dest='S').encode('latin1')
+    return pdf.output(dest='S').encode('latin-1')
 
 def format_itinerary(itinerary):
     # Splitting the generated itinerary by lines and reformatting it as HTML
@@ -188,7 +189,6 @@ with st.container():
             ask_question(question, key, input_type)
         else:
             st.session_state.page += 1
-            st.experimental_rerun()
     else:
         st.write("Thank you for providing the details. I am now creating out the best, most realistic itinerary for you...")
         responses = st.session_state.responses
@@ -215,7 +215,6 @@ with st.container():
     if st.session_state.page > 0:
         if st.button('Previous'):
             st.session_state.page -= 1
-            st.experimental_rerun()
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
