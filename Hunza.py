@@ -122,14 +122,15 @@ def ask_question(question, key, input_type="text"):
     st.markdown(f'<div class="question">{question}</div>', unsafe_allow_html=True)
     
     if input_type == "date":
-        response = st.date_input("", key=key)
+        response = st.date_input("", key=key, label_visibility="hidden")
     else:
-        response = st.text_input("", key=key)
+        response = st.text_input("", key=key, label_visibility="hidden")
     
     if st.button('Next'):
         st.session_state.responses[key] = response
         st.session_state.page += 1
         st.experimental_rerun()
+
 
 if 'responses' not in st.session_state:
     st.session_state['responses'] = {}
