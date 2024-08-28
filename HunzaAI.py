@@ -36,7 +36,7 @@ st.markdown(
         background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
         border: none;
         color: white;
-        padding: 10px 20px;
+        padding: 10px 20px; /* Consistent padding for all buttons */
         text-align: center;
         display: inline-block;
         font-size: 16px;
@@ -60,7 +60,7 @@ st.markdown(
         font-style: italic;
     }
     .question {
-        font-size: 1.3em;  /* Increased font size */
+        font-size: 1.3em;
         color: #FA3E01;
     }
     .question-input {
