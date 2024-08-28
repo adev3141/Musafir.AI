@@ -187,8 +187,10 @@ with st.container():
                     st.session_state.responses[key] = response
                     st.session_state.page += 1  # Properly increment the page number
                     st.session_state['invalid_msg'] = ""  # Clear the error message
+                    st.rerun()  # Rerun the script to update the page
                 else:
                     st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
+                    st.rerun()  # Rerun the script to update the page
 
     else:
         st.write("Thank you for providing the details. I am now creating the best, most realistic itinerary for you...")
@@ -218,6 +220,7 @@ with st.container():
         if st.button('Previous'):
             st.session_state.page -= 1
             st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
+            st.rerun()  # Rerun the script to update the page
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
