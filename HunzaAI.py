@@ -3,7 +3,6 @@ from gemini_model import GeminiModel
 from fpdf import FPDF
 import datetime
 
-# Custom CSS for the design system and to increase the size of the displayed questions
 # Custom CSS for the design system, blinking effect, and to increase the size of the displayed questions
 st.markdown(
     """
@@ -33,26 +32,12 @@ st.markdown(
         border-radius: 10px;
         background-color: #FF7B02;
     }
-    .stButton>button {
+    .stButton>button, .stDownloadButton>button {
         background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%);
         border: none;
         color: white;
         padding: 10px 20px;
         text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 8px;
-    }
-    .stDownloadButton>button {
-        background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%);
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
         display: inline-block;
         font-size: 16px;
         margin: 4px 2px;
@@ -106,12 +91,10 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 # Display the logo with a specific width
 st.image("logo/hunza.ai.png", use_column_width=False, width=75)
 
 # Title and Subtitle
-#st.markdown('<div class="title">Hunza.ai</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Let 3M AI plan your adventure in seconds</div>', unsafe_allow_html=True)
 
 # Instructions
@@ -130,10 +113,11 @@ with st.expander("Instructions"):
 def ask_question(question, key, input_type="text", label="Enter your answer"):
     st.markdown(f'<div class="question">{question}</div>', unsafe_allow_html=True)
     
+    response = None
     if input_type == "date":
-        response = st.date_input("", key=key, label_visibility="hidden")
+        response = st.date_input("", key=key, label_visibility="collapsed")
     else:
-        response = st.text_input("", key=key, label_visibility="hidden")
+        response = st.text_input("", key=key, label_visibility="collapsed")
     
     error_message = st.session_state.get('invalid_msg', "")
     if error_message:
@@ -201,7 +185,6 @@ def format_itinerary(itinerary):
     formatted_itinerary += "<div class='itinerary'><p><em>Note: This itinerary is AI-generated and may be subject to change.</em></p></div>"
     return formatted_itinerary
 
-
 # Main container for the questionnaire and logic
 with st.container():
     if st.session_state.page < len(questions):
@@ -214,11 +197,11 @@ with st.container():
         st.session_state.itinerary = gemini_model.generate_itinerary(prompt)
 
         # Format and display the itinerary
-        formatted_itinerary = format_itinerary(st.session_state.itinerary)
-        st.markdown(f'<div class="itinerary"><h4>Itinerary for {responses["locations"]}, {int(responses["nights"])+1} days</h4>{formatted_itinerary}</div>', unsafe_allow_html=True)
-
-        # Generate and provide a download link for the PDF
         if st.session_state.itinerary:
+            formatted_itinerary = format_itinerary(st.session_state.itinerary)
+            st.markdown(f'<div class="itinerary"><h4>Itinerary for {responses["locations"]}, {int(responses["nights"])+1} days</h4>{formatted_itinerary}</div>', unsafe_allow_html=True)
+
+            # Generate and provide a download link for the PDF
             logo_path = "logo/logo.png"  
             pdf_content = generate_pdf(st.session_state.itinerary, logo_path)
             st.download_button(
@@ -227,6 +210,8 @@ with st.container():
                 file_name=f"itinerary_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf",
                 mime="application/pdf"
             )
+        else:
+            st.error("There was an issue generating the itinerary. Please try again.")
 
     # Display Previous button only if not on the first page and no itinerary is displayed
     if st.session_state.page > 0 and st.session_state.page < len(questions):
