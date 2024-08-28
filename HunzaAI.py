@@ -33,7 +33,7 @@ st.markdown(
         background-color: #FF7B02;
     }
     .stButton>button, .stDownloadButton>button {
-        background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%);
+        background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
         border: none;
         color: white;
         padding: 10px 20px;
@@ -217,7 +217,8 @@ with st.container():
 
     # Display Previous button only if not on the first page and no itinerary is displayed
     if st.session_state.page > 0 and st.session_state.page < len(questions):
-        if st.button('Previous'):
+        previous_clicked = st.button('Previous')
+        if previous_clicked:
             st.session_state.page -= 1
             st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
             st.rerun()  # Rerun the script to update the page
