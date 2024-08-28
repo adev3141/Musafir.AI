@@ -123,20 +123,23 @@ def ask_question(question, key, input_type="text", label="Enter your answer"):
     if error_message:
         st.markdown(f'<div style="color: red; font-weight: bold;">{error_message}</div>', unsafe_allow_html=True)
     
-    if st.button('Next'):
-        if response:
-            st.session_state.responses[key] = response
-            st.session_state.page += 1
-            st.session_state['invalid_msg'] = ""  # Clear the error message
-        else:
-            st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
-
+    # Use a form to properly manage the state of the button click
+    with st.form(key=key):
+        next_clicked = st.form_submit_button('Next')
+        
+        if next_clicked:
+            if response:
+                st.session_state.responses[key] = response
+                st.session_state.page += 1  # Properly increment the page number
+                st.session_state['invalid_msg'] = ""  # Clear the error message
+            else:
+                st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
 
 # Initialize session state variables
 if 'responses' not in st.session_state:
     st.session_state['responses'] = {}
 if 'page' not in st.session_state:
-    st.session_state['page'] = 0
+    st.session_state['page'] = 0  # Ensure 'page' is initialized correctly
 if 'itinerary' not in st.session_state:
     st.session_state['itinerary'] = ""
 if 'invalid_msg' not in st.session_state:
@@ -187,7 +190,6 @@ def format_itinerary(itinerary):
     return formatted_itinerary
 
 # Main container for the questionnaire and logic
-# Main container for the questionnaire and logic
 with st.container():
     if st.session_state.page < len(questions):
         question, key, input_type, label = questions[st.session_state.page]
@@ -220,8 +222,6 @@ with st.container():
         if st.button('Previous'):
             st.session_state.page -= 1
             st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
-
-
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
