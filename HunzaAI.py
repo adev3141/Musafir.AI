@@ -173,6 +173,8 @@ with st.container():
 
             if input_type == "date":
                 response = st.date_input("", key=key, label_visibility="collapsed")
+            elif input_type == "number":
+                response = st.number_input("", min_value=1, value=2, step=1, key=key, label_visibility="collapsed")
             else:
                 response = st.text_input("", key=key, label_visibility="collapsed")
 
