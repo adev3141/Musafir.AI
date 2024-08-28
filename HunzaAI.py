@@ -144,10 +144,8 @@ def ask_question(question, key, input_type="text", label="Enter your answer"):
             st.session_state.responses[key] = response
             st.session_state.page += 1
             st.session_state['invalid_msg'] = ""  # Clear the error message
-            st.experimental_rerun()  # Refresh the page to remove the error message
         else:
             st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
-            st.experimental_rerun()  # Refresh the page to display the error message
 
 # Initialize session state variables
 if 'responses' not in st.session_state:
@@ -235,8 +233,6 @@ with st.container():
         if st.button('Previous'):
             st.session_state.page -= 1
             st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
-            st.experimental_rerun()
-
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
