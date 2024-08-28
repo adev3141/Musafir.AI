@@ -14,6 +14,18 @@ st.markdown(
         background-color: #2B2D42;
         color: #FA3E01;
     }
+    .stButton>button, .stDownloadButton>button {
+        background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 8px;
+    }
     .title {
         font-size: 2.5em;
         color: #FA3E01;
@@ -180,7 +192,25 @@ with st.container():
             if error_message:
                 st.markdown(f'<div style="color: red; font-weight: bold;">{error_message}</div>', unsafe_allow_html=True)
 
-            next_clicked = st.form_submit_button('Next')
+            next_clicked = st.markdown("""
+                <style>
+                .stButton>button {
+                    background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
+                    border: none;
+                    color: white;
+                    padding: 10px 20px;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    border-radius: 8px;
+                }
+                </style>
+                <div style="text-align: right;">
+                    <button type="submit" class="stButton">Next</button>
+                </div>
+                """, unsafe_allow_html=True)
             
             if next_clicked:
                 if response:
