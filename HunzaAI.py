@@ -1,10 +1,10 @@
 import streamlit as st
-from cohere_model import CohereModel  
 from gemini_model import GeminiModel
 from fpdf import FPDF
 import datetime
 
 # Custom CSS for the design system and to increase the size of the displayed questions
+# Custom CSS for the design system, blinking effect, and to increase the size of the displayed questions
 st.markdown(
     """
     <style>
@@ -82,6 +82,14 @@ st.markdown(
         font-size: 0.9em;
         padding: 10px;
     }
+    .input-blink {
+        animation: blink 1s step-end 3;
+    }
+    @keyframes blink {
+        50% {
+            border-color: #FF0000;
+        }
+    }
     .footer {
         position: fixed;
         left: 0;
@@ -93,11 +101,11 @@ st.markdown(
         padding: 10px;
         font-size: 0.9em;
     }
-
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 # Display the logo with a specific width
 st.image("logo/hunza.ai.png", use_column_width=False, width=75)
@@ -118,37 +126,50 @@ with st.expander("Instructions"):
     7. Enter the group size.
     """)
 
-def ask_question(question, key, input_type="text"):
+# Function to ask questions with safeguards and default labels
+def ask_question(question, key, input_type="text", label="Enter your answer"):
     st.markdown(f'<div class="question">{question}</div>', unsafe_allow_html=True)
     
     if input_type == "date":
-        response = st.date_input("", key=key, label="Pick a date")
+        response = st.date_input(label, key=key, label_visibility="hidden")
     else:
-        response = st.text_input("", key=key, label="Pick your answer")
+        response = st.text_input(label, key=key, label_visibility="hidden")
+    
+    error_message = st.session_state.get('invalid_msg', "")
+    if error_message:
+        st.markdown(f'<div style="color: red; font-weight: bold;">{error_message}</div>', unsafe_allow_html=True)
     
     if st.button('Next'):
-        st.session_state.responses[key] = response
-        st.session_state.page += 1
-        st.rerun()
+        if response:
+            st.session_state.responses[key] = response
+            st.session_state.page += 1
+            st.session_state['invalid_msg'] = ""  # Clear the error message
+            st.experimental_rerun()  # Refresh the page to remove the error message
+        else:
+            st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
+            st.experimental_rerun()  # Refresh the page to display the error message
 
-
+# Initialize session state variables
 if 'responses' not in st.session_state:
     st.session_state['responses'] = {}
 if 'page' not in st.session_state:
     st.session_state['page'] = 0
 if 'itinerary' not in st.session_state:
     st.session_state['itinerary'] = ""
+if 'invalid_msg' not in st.session_state:
+    st.session_state['invalid_msg'] = ""
 
 gemini_model = GeminiModel()
 
+# Define the questions and their properties
 questions = [
-    ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text'),
-    ("What's your starting location?", 'starting_location', 'text'),
-    ("When will your trip start?", 'start_date', 'date'),
-    ("How many nights will you be traveling for?", 'nights', 'text'),
-    ("Do you want high-end or economy accommodations?", 'accommodations', 'text'),
-    ("Do you want the trip to be adventure-centric or laid-back?", 'type', 'text'),
-    ("How many people are in your group?", 'group_size', 'text')
+    ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text', 'Enter your answer'),
+    ("What's your starting location?", 'starting_location', 'text', 'Enter your answer'),
+    ("When will your trip start?", 'start_date', 'date', 'Select your date'),
+    ("How many nights will you be traveling for?", 'nights', 'text', 'Enter number of nights'),
+    ("Do you want high-end or economy accommodations?", 'accommodations', 'text', 'Choose an option'),
+    ("Do you want the trip to be adventure-centric or laid-back?", 'type', 'text', 'Choose an option'),
+    ("How many people are in your group?", 'group_size', 'text', 'Enter group size')
 ]
 
 def generate_pdf(itinerary_text, logo_path):
@@ -183,27 +204,22 @@ def format_itinerary(itinerary):
     return formatted_itinerary
 
 
+# Main container for the questionnaire and logic
 with st.container():
     if st.session_state.page < len(questions):
-        question, key, input_type = questions[st.session_state.page]
-        if key not in st.session_state.responses:
-            ask_question(question, key, input_type)
-        else:
-            st.session_state.page += 1
-            st.rerun()
+        question, key, input_type, label = questions[st.session_state.page]
+        ask_question(question, key, input_type, label)
     else:
-        st.write("Thank you for providing the details. I am now creating out the best, most realistic itinerary for you...")
+        st.write("Thank you for providing the details. I am now creating the best, most realistic itinerary for you...")
         responses = st.session_state.responses
         prompt = gemini_model.create_prompt(responses)
         st.session_state.itinerary = gemini_model.generate_itinerary(prompt)
 
-        # Format the itinerary
+        # Format and display the itinerary
         formatted_itinerary = format_itinerary(st.session_state.itinerary)
-        
-        # Display the itinerary
         st.markdown(f'<div class="itinerary"><h4>Itinerary for {responses["locations"]}, {int(responses["nights"])+1} days</h4>{formatted_itinerary}</div>', unsafe_allow_html=True)
 
-        # Generate and provide a download link for the PDF only if the itinerary is generated
+        # Generate and provide a download link for the PDF
         if st.session_state.itinerary:
             logo_path = "logo/logo.png"  
             pdf_content = generate_pdf(st.session_state.itinerary, logo_path)
@@ -214,10 +230,13 @@ with st.container():
                 mime="application/pdf"
             )
 
-    if st.session_state.page > 0:
+    # Display Previous button only if not on the first page and no itinerary is displayed
+    if st.session_state.page > 0 and st.session_state.page < len(questions):
         if st.button('Previous'):
             st.session_state.page -= 1
-            st.rerun()
+            st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
+            st.experimental_rerun()
+
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
