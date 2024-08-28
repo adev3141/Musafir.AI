@@ -131,6 +131,7 @@ def ask_question(question, key, input_type="text", label="Enter your answer"):
         else:
             st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
 
+
 # Initialize session state variables
 if 'responses' not in st.session_state:
     st.session_state['responses'] = {}
@@ -214,10 +215,10 @@ with st.container():
             st.error("There was an issue generating the itinerary. Please try again.")
 
     # Display Previous button only if not on the first page and no itinerary is displayed
-    if st.session_state.page > 0 and st.session_state.page < len(questions):
-        if st.button('Previous'):
-            st.session_state.page -= 1
-            st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
+    if st.button('Previous'):
+        st.session_state.page -= 1
+        st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
+
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
