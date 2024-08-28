@@ -3,7 +3,7 @@ from gemini_model import GeminiModel
 from fpdf import FPDF
 import datetime
 
-# Custom CSS for consistent button styling
+# Custom CSS for the design system, blinking effect, and to increase the size of the displayed questions
 st.markdown(
     """
     <style>
@@ -32,7 +32,7 @@ st.markdown(
         border-radius: 10px;
         background-color: #FF7B02;
     }
-    .custom-button {
+    .stButton>button, .stDownloadButton>button {
         background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
         border: none;
         color: white;
@@ -180,25 +180,35 @@ with st.container():
             if error_message:
                 st.markdown(f'<div style="color: red; font-weight: bold;">{error_message}</div>', unsafe_allow_html=True)
 
-            # Custom button inside the form using HTML
-            st.markdown(
-                """
-                <button class="custom-button" type="submit">Next</button>
-                """,
-                unsafe_allow_html=True,
-            )
+            # Align the button and ensure it has the same styling as the "Previous" button
+            st.markdown("""
+                <style>
+                div.stButton > button {
+                    background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
+                    border: none;
+                    color: white;
+                    padding: 10px 20px;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    margin: 4px 2px;
+                    cursor: pointer;
+                    border-radius: 8px;
+                }
+                </style>
+            """, unsafe_allow_html=True)
 
-            next_clicked = st.form_submit_button('')
-
+            next_clicked = st.form_submit_button('Next')
+            
             if next_clicked:
                 if response:
                     st.session_state.responses[key] = response
                     st.session_state.page += 1  # Properly increment the page number
                     st.session_state['invalid_msg'] = ""  # Clear the error message
-                    st.experimental_rerun()  # Rerun the script to update the page
+                    st.rerun()  # Rerun the script to update the page
                 else:
                     st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
-                    st.experimental_rerun()  # Rerun the script to update the page
+                    st.rerun()  # Rerun the script to update the page
 
     else:
         st.write("Thank you for providing the details. I am now creating the best, most realistic itinerary for you...")
@@ -229,7 +239,7 @@ with st.container():
         if previous_clicked:
             st.session_state.page -= 1
             st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
-            st.experimental_rerun()  # Rerun the script to update the page
+            st.rerun()  # Rerun the script to update the page
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
