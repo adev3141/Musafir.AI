@@ -109,20 +109,11 @@ with st.expander("Instructions"):
     7. Enter the group size.
     """)
 
-# Initialize session state variables
-if 'responses' not in st.session_state:
-    st.session_state['responses'] = {}
-if 'page' not in st.session_state:
-    st.session_state['page'] = 0
-if 'itinerary' not in st.session_state:
-    st.session_state['itinerary'] = ""
-if 'invalid_msg' not in st.session_state:
-    st.session_state['invalid_msg'] = ""
-
 # Function to ask questions with safeguards and default labels
 def ask_question(question, key, input_type="text", label="Enter your answer"):
     st.markdown(f'<div class="question">{question}</div>', unsafe_allow_html=True)
     
+    response = None
     if input_type == "date":
         response = st.date_input("", key=key, label_visibility="collapsed")
     else:
@@ -139,12 +130,16 @@ def ask_question(question, key, input_type="text", label="Enter your answer"):
             st.session_state['invalid_msg'] = ""  # Clear the error message
         else:
             st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
-        st.experimental_set_query_params(page=st.session_state.page)
 
-    if st.button('Previous') and st.session_state.page > 0:
-        st.session_state.page -= 1
-        st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
-        st.experimental_set_query_params(page=st.session_state.page)
+# Initialize session state variables
+if 'responses' not in st.session_state:
+    st.session_state['responses'] = {}
+if 'page' not in st.session_state:
+    st.session_state['page'] = 0
+if 'itinerary' not in st.session_state:
+    st.session_state['itinerary'] = ""
+if 'invalid_msg' not in st.session_state:
+    st.session_state['invalid_msg'] = ""
 
 gemini_model = GeminiModel()
 
@@ -220,7 +215,9 @@ with st.container():
 
     # Display Previous button only if not on the first page and no itinerary is displayed
     if st.session_state.page > 0 and st.session_state.page < len(questions):
-        st.button('Previous')
+        if st.button('Previous'):
+            st.session_state.page -= 1
+            st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
