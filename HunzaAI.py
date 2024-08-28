@@ -3,7 +3,7 @@ from gemini_model import GeminiModel
 from fpdf import FPDF
 import datetime
 
-# Custom CSS for the design system, blinking effect, and to increase the size of the displayed questions
+# Custom CSS for consistent button styling
 st.markdown(
     """
     <style>
@@ -32,7 +32,7 @@ st.markdown(
         border-radius: 10px;
         background-color: #FF7B02;
     }
-    .stButton>button, .stDownloadButton>button {
+    .custom-button {
         background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
         border: none;
         color: white;
@@ -188,17 +188,17 @@ with st.container():
                 unsafe_allow_html=True,
             )
 
-            next_clicked = st.form_submit_button('Next')
-            
+            next_clicked = st.form_submit_button('')
+
             if next_clicked:
                 if response:
                     st.session_state.responses[key] = response
                     st.session_state.page += 1  # Properly increment the page number
                     st.session_state['invalid_msg'] = ""  # Clear the error message
-                    st.rerun()  # Rerun the script to update the page
+                    st.experimental_rerun()  # Rerun the script to update the page
                 else:
                     st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
-                    st.rerun()  # Rerun the script to update the page
+                    st.experimental_rerun()  # Rerun the script to update the page
 
     else:
         st.write("Thank you for providing the details. I am now creating the best, most realistic itinerary for you...")
@@ -229,7 +229,7 @@ with st.container():
         if previous_clicked:
             st.session_state.page -= 1
             st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
-            st.rerun()  # Rerun the script to update the page
+            st.experimental_rerun()  # Rerun the script to update the page
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
