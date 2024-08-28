@@ -180,23 +180,13 @@ with st.container():
             if error_message:
                 st.markdown(f'<div style="color: red; font-weight: bold;">{error_message}</div>', unsafe_allow_html=True)
 
-            # Align the button and ensure it has the same styling as the "Previous" button
-            st.markdown("""
-                <style>
-                div.stButton > button {
-                    background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
-                    border: none;
-                    color: white;
-                    padding: 10px 20px;
-                    text-align: center;
-                    display: inline-block;
-                    font-size: 16px;
-                    margin: 4px 2px;
-                    cursor: pointer;
-                    border-radius: 8px;
-                }
-                </style>
-            """, unsafe_allow_html=True)
+            # Custom button inside the form using HTML
+            st.markdown(
+                """
+                <button class="custom-button" type="submit">Next</button>
+                """,
+                unsafe_allow_html=True,
+            )
 
             next_clicked = st.form_submit_button('Next')
             
