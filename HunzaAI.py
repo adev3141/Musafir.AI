@@ -109,32 +109,6 @@ with st.expander("Instructions"):
     7. Enter the group size.
     """)
 
-# Function to ask questions with safeguards and default labels
-def ask_question(question, key, input_type="text", label="Enter your answer"):
-    st.markdown(f'<div class="question">{question}</div>', unsafe_allow_html=True)
-    
-    response = None
-    if input_type == "date":
-        response = st.date_input("", key=key, label_visibility="collapsed")
-    else:
-        response = st.text_input("", key=key, label_visibility="collapsed")
-    
-    error_message = st.session_state.get('invalid_msg', "")
-    if error_message:
-        st.markdown(f'<div style="color: red; font-weight: bold;">{error_message}</div>', unsafe_allow_html=True)
-    
-    # Use a form to properly manage the state of the button click
-    with st.form(key=key):
-        next_clicked = st.form_submit_button('Next')
-        
-        if next_clicked:
-            if response:
-                st.session_state.responses[key] = response
-                st.session_state.page += 1  # Properly increment the page number
-                st.session_state['invalid_msg'] = ""  # Clear the error message
-            else:
-                st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
-
 # Initialize session state variables
 if 'responses' not in st.session_state:
     st.session_state['responses'] = {}
@@ -149,13 +123,13 @@ gemini_model = GeminiModel()
 
 # Define the questions and their properties
 questions = [
-    ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text', 'Enter your answer'),
-    ("What's your starting location?", 'starting_location', 'text', 'Enter your answer'),
-    ("When will your trip start?", 'start_date', 'date', 'Select your date'),
-    ("How many nights will you be traveling for?", 'nights', 'text', 'Enter number of nights'),
-    ("Do you want high-end or economy accommodations?", 'accommodations', 'text', 'Choose an option'),
-    ("Do you want the trip to be adventure-centric or laid-back?", 'type', 'text', 'Choose an option'),
-    ("How many people are in your group?", 'group_size', 'text', 'Enter group size')
+    ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text'),
+    ("What's your starting location?", 'starting_location', 'text'),
+    ("When will your trip start?", 'start_date', 'date'),
+    ("How many nights will you be traveling for?", 'nights', 'text'),
+    ("Do you want high-end or economy accommodations?", 'accommodations', 'text'),
+    ("Do you want the trip to be adventure-centric or laid-back?", 'type', 'text'),
+    ("How many people are in your group?", 'group_size', 'text')
 ]
 
 def generate_pdf(itinerary_text, logo_path):
@@ -192,8 +166,30 @@ def format_itinerary(itinerary):
 # Main container for the questionnaire and logic
 with st.container():
     if st.session_state.page < len(questions):
-        question, key, input_type, label = questions[st.session_state.page]
-        ask_question(question, key, input_type, label)
+        question, key, input_type = questions[st.session_state.page]
+
+        with st.form(key=f'form_{st.session_state.page}'):
+            st.markdown(f'<div class="question">{question}</div>', unsafe_allow_html=True)
+
+            if input_type == "date":
+                response = st.date_input("", key=key, label_visibility="collapsed")
+            else:
+                response = st.text_input("", key=key, label_visibility="collapsed")
+
+            error_message = st.session_state.get('invalid_msg', "")
+            if error_message:
+                st.markdown(f'<div style="color: red; font-weight: bold;">{error_message}</div>', unsafe_allow_html=True)
+
+            next_clicked = st.form_submit_button('Next')
+            
+            if next_clicked:
+                if response:
+                    st.session_state.responses[key] = response
+                    st.session_state.page += 1  # Properly increment the page number
+                    st.session_state['invalid_msg'] = ""  # Clear the error message
+                else:
+                    st.session_state['invalid_msg'] = "This field is required! Please enter a valid response."
+
     else:
         st.write("Thank you for providing the details. I am now creating the best, most realistic itinerary for you...")
         responses = st.session_state.responses
