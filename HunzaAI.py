@@ -32,7 +32,7 @@ st.markdown(
         border-radius: 10px;
         background-color: #FF7B02;
     }
-    .stButton>button, .stDownloadButton>button {
+    .stButton>button {
         background: linear-gradient(90deg, #FF490E 0%, #FF7B02 100%) !important;
         border: none;
         color: white;
