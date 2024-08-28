@@ -124,7 +124,7 @@ def ask_question(question, key, input_type="text"):
     if input_type == "date":
         response = st.date_input("", key=key, label="Pick a date")
     else:
-        response = st.text_input("", key=key, label="Pick a date")
+        response = st.text_input("", key=key, label="Pick your answer")
     
     if st.button('Next'):
         st.session_state.responses[key] = response
