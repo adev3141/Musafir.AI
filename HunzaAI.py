@@ -145,10 +145,10 @@ questions = [
     ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text'),
     ("What's your starting location?", 'starting_location', 'text'),
     ("When will your trip start?", 'start_date', 'date'),
-    ("How many nights will you be traveling for?", 'nights', 'text'),
+    ("How many nights will you be traveling for?", 'nights', 'number'),
     ("Do you want high-end or economy accommodations?", 'accommodations', 'text'),
     ("Do you want the trip to be adventure-centric or laid-back?", 'type', 'text'),
-    ("How many people are in your group?", 'group_size', 'text')
+    ("How many people are in your group?", 'group_size', 'number')
 ]
 
 def generate_pdf(itinerary_text, logo_path):
