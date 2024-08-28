@@ -215,9 +215,11 @@ with st.container():
             st.error("There was an issue generating the itinerary. Please try again.")
 
     # Display Previous button only if not on the first page and no itinerary is displayed
-    if st.button('Previous'):
-        st.session_state.page -= 1
-        st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
+    if st.session_state.page > 0 and st.session_state.page < len(questions):
+        if st.button('Previous'):
+            st.session_state.page -= 1
+            st.session_state['invalid_msg'] = ""  # Clear any error messages when going back
+
 
 
 # Footer
