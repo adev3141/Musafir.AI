@@ -195,7 +195,7 @@ with st.container():
                     st.rerun()  # Rerun the script to update the page
 
     else:
-        st.write("Thank you for providing the details. I am now creating the best, most realistic itinerary for you...")
+        st.write("Thank you for providing the details. Musafir AI is now creating the best, most realistic itinerary for you...")
         responses = st.session_state.responses
         prompt = gemini_model.create_prompt(responses)
         st.session_state.itinerary = gemini_model.generate_itinerary(prompt)
