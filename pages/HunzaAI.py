@@ -124,7 +124,7 @@ gemini_model = GeminiModel()
 # Define the questions and their properties
 questions = [
     ("Where do you want to travel in Pakistan (can be multiple locations)?", 'locations', 'text'),
-    ("What's your starting location?", 'starting_location', 'number'),
+    ("What's your starting location?", 'starting_location', 'text'),
     ("When will your trip start?", 'start_date', 'date'),
     ("How many nights will you be traveling for?", 'nights', 'number'),
     ("Do you want high-end or economy accommodations?", 'accommodations', 'text'),
