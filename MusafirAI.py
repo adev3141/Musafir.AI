@@ -8,11 +8,19 @@ st.markdown(
     """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600&display=swap');
+    :root {
+        --primary-color: #FF7B02;
+        --background-color: #FFFFFF;
+        --secondary-background-color: #FF7B02;
+        --text-color: #2B2D42;
+    }
     [data-testid="stSidebar"] {
         background-color: var(--primary-color) !important;
     }
     body {
         font-family: 'Overpass', sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
     }
     .title {
         font-size: 2.5em;
@@ -89,9 +97,9 @@ with st.expander("Enabling Travel Businesses"):
 
 # Display buttons that navigate to other pages
 if st.button("Go to Hunza AI"):
-    st.st.query_params(page="HunzaAI")
+    st.experimental_set_query_params(page="HunzaAI")
 if st.button("Go to Skardu AI"):
-    st.st.query_params(page="SkarduAI")
+    st.experimental_set_query_params(page="SkarduAI")
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
