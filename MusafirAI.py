@@ -96,10 +96,10 @@ with st.expander("Enabling Travel Businesses"):
     """)
 
 # Display buttons that navigate to other pages
-if st.button("Go to Hunza AI"):
-    st.experimental_set_query_params(page="HunzaAI")
-if st.button("Go to Skardu AI"):
-    st.experimental_set_query_params(page="SkarduAI")
+#if st.button("Go to Hunza AI"):
+ #   st.experimental_set_query_params(page="HunzaAI")
+#if st.button("Go to Skardu AI"):
+ #   st.experimental_set_query_params(page="SkarduAI")
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)
