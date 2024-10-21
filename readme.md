@@ -38,7 +38,7 @@ Usage
 
 1. Run the Streamlit app:
 
-streamlit run streamlit_app.py
+streamlit run MusafirAI.py
 
 2. Open your browser and go to http://localhost:8501 to use the travel itinerary generator.
 
