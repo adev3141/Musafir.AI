@@ -95,11 +95,16 @@ with st.expander("Enabling Travel Businesses"):
     For travel businesses, Musafir AI provides an edge in customer service and operational efficiency. By integrating AI-driven tools, travel agencies can offer clients personalized travel plans and checklists, leading to higher satisfaction rates and more repeat business. Musafir AI bridges the gap between technology and hospitality, allowing businesses to thrive in the competitive travel industry.
     """)
 
+with st.expander("Can you buy this for your business?"):
+    st.markdown("""
+    Yes. We offer full integration to your travel ecosystems. Our API's are fast and portable for almost all systems.
+    """)
+
 # Display buttons that navigate to other pages
 #if st.button("Go to Hunza AI"):
- #   st.experimental_set_query_params(page="HunzaAI")
+ #   st.experimental_set_query_params(page="Free Travel Plans")
 #if st.button("Go to Skardu AI"):
- #   st.experimental_set_query_params(page="SkarduAI")
+ #   st.experimental_set_query_params(page="Free Travel Checklists")
 
 # Footer
 st.markdown('<div class="footer">All rights reserved | Created by ADev</div>', unsafe_allow_html=True)

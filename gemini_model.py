@@ -15,7 +15,7 @@ class GeminiModel:
     def create_prompt(self, responses):
         logging.debug(f"Creating prompt with responses: {responses}")
         prompt = (
-            "You are a seasoned travel consultant with expertise in crafting detailed itineraries for trips in Pakistan. "
+            f"You are a seasoned travel consultant with expertise in crafting detailed itineraries for trips in:  {responses['locations']}, Pakistan."
             "Based on the provided details, generate a comprehensive and realistic itinerary including travel times, routes, local events, and national holidays. "
             "The itinerary should be practical and enjoyable. Here are the details:\n"
             f"**Locations**: {responses['locations']}\n"
