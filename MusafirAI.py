@@ -90,7 +90,7 @@ with st.expander("Can you buy this for your business?"):
     Yes. We offer full integration to your travel ecosystems. Our API's are fast and portable for almost all systems.
     """)
 
-with st.expander("Solving Problems of the Musafir Community"):
+with st.expander("Solving Problems of the Travel Communities"):
     st.markdown("""
     Traveling can be overwhelming, with countless details to manage, from destination research to itinerary planning. Musafir AI simplifies this process by offering automated, yet highly personalized, travel solutions. Whether you're an adventurer seeking the best spots in Hunza or a business traveler needing a precise schedule in Skardu, Musafir AI has you covered.
     """)
