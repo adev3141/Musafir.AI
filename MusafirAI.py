@@ -85,6 +85,11 @@ with st.expander("What is Musafir AI?"):
     **Musafir AI** is a revolutionary platform designed to empower the Musafir community with AI-powered tools that enhance travel planning and execution. Our suite of applications leverages advanced AI to generate personalized itineraries, create travel checklists, and offer recommendations tailored to individual preferences.
     """)
 
+with st.expander("Can you buy this for your business?"):
+    st.markdown("""
+    Yes. We offer full integration to your travel ecosystems. Our API's are fast and portable for almost all systems.
+    """)
+
 with st.expander("Solving Problems of the Musafir Community"):
     st.markdown("""
     Traveling can be overwhelming, with countless details to manage, from destination research to itinerary planning. Musafir AI simplifies this process by offering automated, yet highly personalized, travel solutions. Whether you're an adventurer seeking the best spots in Hunza or a business traveler needing a precise schedule in Skardu, Musafir AI has you covered.
@@ -93,11 +98,6 @@ with st.expander("Solving Problems of the Musafir Community"):
 with st.expander("Enabling Travel Businesses"):
     st.markdown("""
     For travel businesses, Musafir AI provides an edge in customer service and operational efficiency. By integrating AI-driven tools, travel agencies can offer clients personalized travel plans and checklists, leading to higher satisfaction rates and more repeat business. Musafir AI bridges the gap between technology and hospitality, allowing businesses to thrive in the competitive travel industry.
-    """)
-
-with st.expander("Can you buy this for your business?"):
-    st.markdown("""
-    Yes. We offer full integration to your travel ecosystems. Our API's are fast and portable for almost all systems.
     """)
 
 # Display buttons that navigate to other pages
