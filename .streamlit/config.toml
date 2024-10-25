@@ -4,3 +4,10 @@ backgroundColor = "#FFFFFF"
 secondaryBackgroundColor = "#FF7B02"  # Ensure this is your desired color or remove it to default
 textColor = "#2B2D42"
 font = "sans serif"
+
+[theme]
+primaryColor = "#FF7B02"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#FF7B02"  # Ensure this is your desired color or remove it to default
+textColor = "#2B2D42"
+font = "sans serif"
